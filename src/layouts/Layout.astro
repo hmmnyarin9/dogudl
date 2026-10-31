@@ -1,0 +1,6 @@
+---
+import '../style.css';
+const { title, description } = Astro.props;
+---
+<!doctype html><html lang="ko"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><meta name="description" content={description}/><title>{title}</title></head>
+<body><header><a class="brand" href="/"><span aria-hidden="true">▦</span> 도구들</a><small>DOGUDL.COM</small></header><main><slot/></main><footer>도구들 <span>·</span> DOGUDL.COM</footer></body></html>

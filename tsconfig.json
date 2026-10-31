@@ -1,0 +1,1 @@
+{"extends":"astro/tsconfigs/strict","include":["src/**/*.ts"],"compilerOptions":{"types":["youtube"],"allowImportingTsExtensions":true}}

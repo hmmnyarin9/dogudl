@@ -1,0 +1,11 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+---
+<Layout title="유튜브 도우미 · 도구들" description="유튜브 영상의 A–B 구간을 반복하고 배속을 조절하세요.">
+<a class="back" href="/">← 전체 도구</a><h1>유튜브 도우미<span>.</span></h1><p class="lead">반복할 구간을 찍고, 원하는 속도로 들어보세요.</p>
+<form id="open"><label for="url">유튜브 링크</label><div class="row"><input id="url" type="text" inputmode="url" required placeholder="유튜브 링크를 붙여넣으세요"/><button>영상 열기</button></div></form>
+<div class="video"><div id="player"></div><p id="placeholder">▶<br/>링크를 열면 플레이어가 표시됩니다</p></div>
+<p role="status" id="status">영상을 열고 재생해 주세요.</p>
+<fieldset id="controls" disabled><legend>구간 반복</legend><div class="marks">{['A','B'].map((key,i)=><div><button id={'mark'+key}>{i?'끝점 B':'시작점 A'} 찍기</button><label for={key}>{i?'끝':'시작'} 시간</label><input id={key} placeholder="분:초" autocomplete="off"/></div>)}</div><button id="loop" aria-pressed="false">반복 켜기</button></fieldset>
+<fieldset><legend>재생 속도</legend><div id="rates">영상을 열면 배속을 선택할 수 있습니다.</div></fieldset>
+<script>import '../../../player';</script></Layout>

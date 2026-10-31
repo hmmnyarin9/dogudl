@@ -1,0 +1,8 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { tools } from '../tools';
+---
+<Layout title="도구들 · 작은 웹 도구 모음" description="필요할 때 바로 여는 웹 도구 모음">
+<p class="eyebrow">TOOL DIRECTORY</p><h1>도구들<span>.</span></h1><p class="lead">필요할 때 바로 꺼내 쓰는 웹 도구 모음.</p>
+<section><h2 class="label">전체 도구 <b>{tools.length.toString().padStart(2,'0')}</b></h2>
+{tools.map(tool => <a class="card" href={tool.path}><div class="art" aria-hidden="true"><div class="track"><i>A</i><strong>▶</strong><i>B</i></div></div><div class="info"><small>동영상 도구</small><h2>{tool.name}</h2><p>{tool.description}</p><strong>도구 열기 ↗</strong></div></a>)}</section></Layout>
