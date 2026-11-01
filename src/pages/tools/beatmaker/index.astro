@@ -1,0 +1,41 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+const names = ['킥', '스네어', '하이햇', '오픈 햇', '클랩'];
+---
+<Layout title="비트메이커 · 도구들" description="드럼 패턴으로 만드는 1마디 루프">
+<a class="back" href="/">← 전체 도구</a><br/>
+<p class="eyebrow">TOOL 02 / DRUM MACHINE</p>
+<h1>비트메이커<span>.</span></h1><p class="lead">▶ 재생을 누르고, 듣는 동안 칸을 켜거나 끄세요.</p>
+<div class="console">
+<div class="controls"><button id="play">▶ 재생</button>
+<div class="presets" role="group" aria-label="프리셋">{['붐뱁','하우스','트랩','빈 패턴'].map((name,i) => <button data-preset aria-pressed={i === 0}>{name}</button>)}</div>
+<label>빠르기 <input id="tempo" aria-label="빠르기" type="range" min="50" max="200" value="92"/> <output id="bpm">92 BPM</output></label></div>
+<div class="heading"><strong id="pattern-name">붐뱁</strong><span>1마디 · 16스텝</span></div>
+<div class="toolbar"><div class="presets" aria-label="편집 방식" role="group"><button data-mode aria-pressed="true">노트 켜기·끄기</button><button data-mode aria-pressed="false">강약</button></div><button id="undo" disabled>↶ 되돌리기</button><button id="reset" disabled>원본으로 되돌리기</button></div><div class="scroll"><div class="matrix"><small class="sticky">박자</small>{[1,2,3,4].map(beat => <small class="beat">{beat}박</small>)}<small class="sticky">드럼</small>{Array.from({length:16},(_,i)=><small data-head>{i+1}</small>)}
+{names.map((name,r)=><><div class="sticky channel" role="group" aria-label={name}>
+  <button class="audition" aria-label={name+" 미리듣기"}>▶ {name}</button>
+  <button class="mute" data-mute aria-label={name+" 음소거"}>음소거</button>
+  <input data-volume aria-label={name+" 음량"} type="range" min="0" max="100" value="100"/>
+  <output data-volume-value>100%</output>
+</div>{Array.from({length:16},(_,i)=><button class="pad" data-row={r} data-beat-start={i % 4 === 0} data-step={i} data-label={name+" "+(i+1)+"번째 칸"} aria-label={name+' '+(i+1)+'번째 칸'} aria-pressed="false"/>)}</>)}</div></div>
+<div class="legend"><span id="position">대기 중</span><span>악기 이름으로 미리듣기 · 마우스 드래그로 연속 편집 · 강약 모드 또는 우클릭 (• 약 / •• 중 / ••• 강)</span></div>
+<div class="toolbar"><span>스윙</span><div class="presets" role="group" aria-label="스윙">{['반듯하게','가볍게','깊게'].map(name => <button data-swing>{name}</button>)}</div></div>
+<div class="toolbar"><span id="save-state" role="status"></span><button id="download">↓ WAV 다운로드</button></div>
+</div></Layout>
+<style>
+.console{border:1px solid #acbaaf;border-radius:16px;background:#fffef7;overflow:hidden}.controls,.heading,.legend{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;padding:18px 22px}.controls{background:#e5eddd;border-bottom:1px solid #acbaaf}.controls label,.heading label{display:flex;align-items:center;gap:9px;font-size:14px}select{font:inherit;border:1px solid #a1afa2;border-radius:6px;background:#fffef7;padding:6px;color:inherit}input[type=range]{accent-color:#476747;width:clamp(84px,12vw,145px);padding:0}output{font-family:monospace;min-width:7ch}.scroll{overflow-x:auto;background:#243b35;padding:17px}.matrix{display:grid;grid-template-columns:55px repeat(16,minmax(27px,1fr));gap:5px;align-items:center;min-width:605px;color:#eef4e8}.matrix b,.matrix small{font-size:13px}.matrix small{text-align:center}.pad{height:34px;border:1px solid #52655e;background:#384b45;border-radius:5px;padding:0}.pad[aria-pressed=true]{background:#c7e782;border-color:#adc972}.pad[data-row="1"][aria-pressed=true],.pad[data-row="4"][aria-pressed=true]{background:#f0b48b}.matrix .current{color:#172d26;background:#c7e782;border-radius:4px}.legend{font-size:13px;color:#52665a}
+.presets{display:flex;gap:4px;flex-wrap:wrap}.presets button{background:#fffef7;color:#294938;padding:6px 12px;font-size:14px}.presets button[aria-pressed=true]{background:#284d3f;color:white}.pad[aria-pressed=true]{color:#243b35;letter-spacing:1px}.pad[data-level="1"]{opacity:.62}.pad[data-level="2"]{opacity:.84}.heading span{font-size:14px}
+.toolbar{display:flex;align-items:center;flex-wrap:wrap;gap:8px;padding:12px 22px}.toolbar>span{font-size:14px}.toolbar>button{padding:6px 10px;font-size:14px}.toolbar #download{margin-left:auto}.matrix{grid-template-columns:132px repeat(16,minmax(30px,1fr));min-width:660px}.sticky{position:sticky;left:0;z-index:2;background:#243b35;box-shadow:-10px 0 #243b35}.audition{font-size:13px;padding:6px 2px;color:white}.beat{grid-column:span 4;border-bottom:2px solid #91a892}.pad[data-beat-start=true]{border-left:3px solid #9bb6a5}.matrix .pad.current{box-shadow:inset 0 0 0 2px #fff;color:inherit}.matrix .pad.current[aria-pressed=false]{background:#52685c}.pad{user-select:none}.pad.flash,.audition.flash{outline:2px solid #ddeca3;outline-offset:-2px}.scroll{padding-inline:6px}.legend{gap:4px}.heading{padding-bottom:0}
+@media(max-width:600px){.matrix{grid-template-columns:124px repeat(16,38px);min-width:max-content}.pad{height:42px}.scroll:after{content:"";display:block;height:4px}.toolbar,.controls,.heading,.legend{padding-inline:12px}}
+.channel{display:grid;grid-template-columns:minmax(0,1fr) 42px;align-items:center;gap:2px 4px;padding:3px 4px 3px 0}
+.channel button{min-height:26px;padding:2px;font-size:12px}
+.channel input{width:100%;margin:0;accent-color:#c7e782}
+.channel output{min-width:0;text-align:center;font:11px monospace}
+.channel .mute{color:#e3eae2;background:#384b45;border-color:#73877c}
+.channel .mute[aria-pressed=true]{background:#f0b48b;color:#243b35}
+</style>
+<script>
+import '../../../beatmaker';
+</script>
+
+
